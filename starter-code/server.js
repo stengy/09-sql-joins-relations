@@ -6,7 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 4000;
 const app = express();
-const conString = 'postgres://postgres:passwordhere@localhost:5432/kilovolt';// TODO: Don't forget to set your own conString
+const conString = 'postgres://postgres:1234@localhost:5432/kilovolt';// TODO: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', function(error) {
@@ -86,7 +86,7 @@ app.put('/articles/:id', function(request, response) {
   client.query(
     `UPDATE authors SET author=$2, "authorUrl"=$3 WHERE author_id = $1`,
     [
-      request.params.id,
+      request.body.author_id,
       request.body.author,
       request.body.authorUrl
     ])
